@@ -31,18 +31,9 @@ func TestHandlerChat(t *testing.T) {
 	}
 }
 
-const queryResponse = `[
-	{
-		"seqno": 1,
-		"sig_id": "c3f2b7c2b92e7e53b8d67542695ec26f5a8ea3b3abaa07764b14e453434471180f",
-		"type": "self",
-		"ctime": 1394236029,
-		"revoked": false,
-		"active": true,
-		"key_fingerprint": "9fcea980ccfd3c13e11e88a9350687d17e81fd68",
-		"statement": "testkeybaseuser"
-	}
-]`
+const queryResponse = `2017-04-05T13:44:17.068898-04:00 ▶ [INFO keybase ui.go:64] 001 Identifying \x1b[1mshazow\x1b[22m\n`
+
+const queryResponseErr = `2017-04-05T12:48:09.203299-04:00 ‚M-^V∂ [ERRO keybase standard.go:230] 001 Not found$`
 
 func TestHandlerQuery(t *testing.T) {
 	h := Handler()
@@ -50,13 +41,13 @@ func TestHandlerQuery(t *testing.T) {
 	var ranCmd string
 	h.Run = func(cmd *exec.Cmd) error {
 		ranCmd = strings.Join(cmd.Args, " ")
-		io.WriteString(cmd.Stdout, queryResponse)
+		io.WriteString(cmd.Stderr, queryResponse)
 		return nil
 	}
 
 	req := &Request{
 		Method: "query",
-		To:     "testkeybaseuser",
+		To:     "sometestuser",
 	}
 
 	res, err := h.Handle(req)
@@ -68,7 +59,7 @@ func TestHandlerQuery(t *testing.T) {
 		t.Errorf("result is not *resultQuery: %T", res)
 	}
 
-	if ranCmd != "/usr/local/bin/keybase sigs list --type=self --json testkeybaseuser" {
+	if ranCmd != "/usr/local/bin/keybase id sometestuser" {
 		t.Errorf("unexpected command: %q", ranCmd)
 	}
 
@@ -76,7 +67,7 @@ func TestHandlerQuery(t *testing.T) {
 		t.Fatal("result is nil")
 	}
 
-	if len(result.Sigs) != 1 || result.Sigs[0].Statement != "testkeybaseuser" {
+	if result.Username != "sometestuser" {
 		t.Errorf("invalid result value: %q", result)
 	}
 }
