@@ -82,7 +82,7 @@ build_one_architecture() {
   chmod 755 "$cron_file"
 
   # Whitelist for NativeMessaging
-  kbnm_bin="/usr/local/bin/kbnm"
+  kbnm_bin="/usr/bin/kbnm"
   kbnm_file="/etc/opt/chrome/native-messaging-hosts/io.keybase.kbnm"
   mkdir -p "$(dirname "$kbnm_file")"
   cat "$here/host_json.template" \
