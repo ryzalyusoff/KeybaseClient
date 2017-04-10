@@ -337,9 +337,10 @@
 			"revision": ""
 		},
 		{
+			"checksumSHA1": "dHAjFs/IaTk+vlbxiMRGDW5W/D4=",
 			"path": "github.com/keybase/saltpack",
-			"revision": "4804ac34f11533bfd1b08c2e5385ef66c6dba9aa",
-			"revisionTime": "2016-03-23T19:53:58-05:00"
+			"revision": "a5352c4421c37856db346939ff6d267af0bcaea3",
+			"revisionTime": "2017-04-10T15:18:02Z"
 		},
 		{
 			"path": "github.com/keybase/saltpack/encoding/basex",
